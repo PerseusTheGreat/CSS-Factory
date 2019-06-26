@@ -1,0 +1,35 @@
+{
+  "name": "css-factory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Perseus The Great",
+  "license": "ISC",
+  "scripts": {
+    "update": "ncu -u && npm update -f && npm install -f && npm audit fix -f && npm rebuild -f",
+    "delete-all": "gulp delete-all-files",
+    "prelint": "gulp pre-lint-css",
+    "clean": "gulp clean-css",
+    "lint": "gulp lint-css",
+    "prefix": "gulp prefix-css",
+    "prettify": "gulp prettify-css",
+    "minify": "gulp minify-css",
+    "build": "npm-run-all --serial prelint clean lint prefix prettify minify",
+    "quick": "gulp quick-build"    
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-clean-dir": "^1.0.2",
+    "gulp-dest": "^0.2.3",
+    "gulp-prettier": "^2.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-rtlcss": "^1.4.0",
+    "gulp-stylelint": "^9.0.0",
+    "npm-run-all": "^4.1.5",
+    "stylelint": "^10.1.0",
+    "stylelint-config-twbs-bootstrap": "^0.3.1"
+  }
+}
