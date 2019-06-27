@@ -1,9 +1,2 @@
 # Folders to ignore
 node_modules
-work/0_input/**
-work/1_clean/**
-work/2_lint/**
-work/3_prefix/**
-work/4_pretty/**
-work/5_dist/**
-work/quick/**
