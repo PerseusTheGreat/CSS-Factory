@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "update": "ncu -u && npm install -f && npm audit fix -f && npm rebuild -f",
-    "empty": "gulp delete-all-files",
+    "empty": "gulp clean-up-files",
     "prelint": "gulp pre-lint-css",
     "clean": "gulp clean-css",
     "lint": "gulp lint-css",
@@ -16,7 +16,8 @@
     "prettify": "gulp prettify-css",
     "minify": "gulp minify-css",
     "build": "gulp build-css",
-    "quick": "gulp quick-build-css"
+    "quick": "gulp quick-build-css",
+    "less": "gulp quick-build-less"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
@@ -24,11 +25,13 @@
     "gulp-clean-css": "^4.2.0",
     "gulp-clean-dir": "^1.0.2",
     "gulp-dest": "^0.2.3",
+    "gulp-less": "^4.0.1",
     "gulp-prettier": "^2.1.0",
     "gulp-rename": "^1.4.0",
     "gulp-rtlcss": "^1.4.0",
+    "gulp-strip-comments": "^2.5.2",
     "gulp-stylelint": "^9.0.0",
     "stylelint": "^10.1.0",
-    "stylelint-config-twbs-bootstrap": "^0.3.1"
+    "stylelint-config-twbs-bootstrap": "^0.4.0"
   }
 }
