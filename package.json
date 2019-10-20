@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-autoprefixer": "^7.0.0",
+    "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.2.0",
     "gulp-clean-dir": "^1.0.2",
     "gulp-dest": "^0.2.3",
@@ -30,8 +30,8 @@
     "gulp-rename": "^1.4.0",
     "gulp-rtlcss": "^1.4.0",
     "gulp-strip-comments": "^2.5.2",
-    "gulp-stylelint": "^9.0.0",
-    "stylelint": "^11.0.0",
-    "stylelint-config-twbs-bootstrap": "^0.6.0"
+    "gulp-stylelint": "^10.0.0",
+    "stylelint": "^11.1.1",
+    "stylelint-config-twbs-bootstrap": "^0.7.0"
   }
 }
