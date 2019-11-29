@@ -26,12 +26,12 @@
     "gulp-clean-dir": "^1.0.2",
     "gulp-dest": "^0.2.3",
     "gulp-less": "^4.0.1",
-    "gulp-prettier": "^2.1.0",
+    "gulp-prettier": "^2.3.0",
     "gulp-rename": "^1.4.0",
     "gulp-rtlcss": "^1.4.0",
     "gulp-strip-comments": "^2.5.2",
     "gulp-stylelint": "^10.0.0",
-    "stylelint": "^11.1.1",
-    "stylelint-config-twbs-bootstrap": "^0.7.0"
+    "stylelint": "^12.0.0",
+    "stylelint-config-twbs-bootstrap": "^1.0.0"
   }
 }
