@@ -24,14 +24,14 @@
     "gulp-autoprefixer": "^7.0.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-clean-dir": "^1.0.2",
-    "gulp-dest": "^0.2.3",
+    "gulp-dest": "^0.2.2",
     "gulp-less": "^4.0.1",
     "gulp-prettier": "^3.0.0",
     "gulp-rename": "^2.0.0",
     "gulp-rtlcss": "^1.4.1",
     "gulp-strip-comments": "^2.5.2",
     "gulp-stylelint": "^13.0.0",
-    "stylelint": "^13.7.2",
+    "stylelint": "^13.9.0",
     "stylelint-config-twbs-bootstrap": "^2.1.0"
   }
 }
