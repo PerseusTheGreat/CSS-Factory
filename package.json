@@ -20,7 +20,7 @@
     "less": "gulp quick-build-less"
   },
   "devDependencies": {
-    "autoprefixer": "^10.3.7",
+    "autoprefixer": "^10.4.2",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
@@ -32,7 +32,7 @@
     "gulp-rtlcss": "^1.4.2",
     "gulp-strip-comments": "^2.5.2",
     "gulp-stylelint": "^13.0.0",
-    "stylelint": "^13.13.1",
+    "stylelint": "^14.5.3",
     "stylelint-config-twbs-bootstrap": "^2.2.4"
   }
 }
