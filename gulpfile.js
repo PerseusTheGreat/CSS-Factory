@@ -6,14 +6,14 @@ let autoPrefixer;
 
 /** Options **/
 const folders = {
-    input: './work/0_input',
-    clean: './work/1_clean',
-    lint: './work/2_lint',
+    input:  './work/0_input',
+    clean:  './work/1_clean',
+    lint:   './work/2_lint',
     prefix: './work/3_prefix',
     pretty: './work/4_pretty',
-    dist: './work/5_dist',
-    quick: './work/quick',
-    less: './work/less'
+    dist:   './work/5_dist',
+    quick:  './work/quick',
+    less:   './work/less'
 };
 const slashStartDotCss = '/*.css';
 
@@ -29,17 +29,15 @@ const optionsCleanPrefixes = {
 };
 const optionsLikeBootstrapPrefixes = {
     overrideBrowserslist: [
-        ">= 1%",
-        "last 1 major version",
+        ">= 0.5%",
+        "last 2 major versions",
         "not dead",
-        "Chrome >= 45",
-        "Firefox >= 38",
-        "Edge >= 12",
-        "Explorer >= 10",
-        "iOS >= 9",
-        "Safari >= 9",
-        "Android >= 4.4",
-        "Opera >= 30"
+        "Chrome >= 60",
+        "Firefox >= 60",
+        "Firefox ESR",
+        "iOS >= 12",
+        "Safari >= 12",
+        "not Explorer <= 11"
     ],
     cascade: false
 };
@@ -63,7 +61,7 @@ const getOptionsStyleLint = function (doFix, outputPath, fileName) {
         reportOutputDir: outputPath,
         reporters: [
             {
-                formatter: 'verbose',
+                formatter: 'string',
                 save: fileName,
                 console: false
             }
@@ -166,18 +164,18 @@ gulp.task('quick-build-css', function () {
     const dest = require("gulp-dest");
 
     return gulp
-        .src(folders.input + slashStartDotCss)
-        .pipe(cleanDir(folders.input, optionsExtDotTxt))
-        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))
-        .pipe(strip.text(otionsStripComments))
-        .pipe(autoPrefixer(optionsCleanPrefixes))
-        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))
-        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))
-        .pipe(prettier(optionsPrettier))
-        .pipe(gulp.dest(folders.quick))
-        .pipe(cleanCSS(optionsCleanCss))
-        .pipe(dest("./", optionsExtDotMinDotCss))
-        .pipe(gulp.dest(folders.quick));
+        .src(folders.input + slashStartDotCss)                                  // Get all `.css` files in `input` folder
+        .pipe(cleanDir(folders.input, optionsExtDotTxt))                        // Delete all `.txt` files in `input` folder
+        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))               // Delete all `.css` & `.txt` files in `quick` folder
+        .pipe(strip.text(otionsStripComments))                                  // Remove all comments inside `.css` files
+        .pipe(autoPrefixer(optionsCleanPrefixes))                               // Clean all prefixed styles
+        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))  // Lint all styles
+        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))                       // Add prefixed styles
+        .pipe(prettier(optionsPrettier))                                        // Format styles
+        .pipe(gulp.dest(folders.quick))                                         // Save as `.css` file to `quick` folder
+        .pipe(cleanCSS(optionsCleanCss))                                        // Minify all `.css` files
+        .pipe(dest("./", optionsExtDotMinDotCss))                               // Set minified file names
+        .pipe(gulp.dest(folders.quick));                                        // Save as `.min.css` file to `quick` folder
 });
 
 gulp.task('quick-build-less', function () {
@@ -192,17 +190,16 @@ gulp.task('quick-build-less', function () {
     const dest = require("gulp-dest");
 
     return gulp
-        .src(folders.less + '/*.less')
-        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))
-        .pipe(less())
-        //.pipe(gulp.dest(folders.input));
-        .pipe(strip.text(otionsStripComments))
-        .pipe(autoPrefixer(optionsCleanPrefixes))
-        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))
-        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))
-        .pipe(prettier(optionsPrettier))
-        .pipe(gulp.dest(folders.quick))
-        .pipe(cleanCSS(optionsCleanCss))
-        .pipe(dest("./", optionsExtDotMinDotCss))
-        .pipe(gulp.dest(folders.quick));
+        .src(folders.less + '/*.less')                                          // Get all `.less` files in `less` folder
+        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))               // Delete all `.css` & `.txt` files in `quick` folder
+        .pipe(less())                                                           // Transpile LESS styles to CSS styles
+        .pipe(strip.text(otionsStripComments))                                  // Remove all comments inside CSS styles
+        .pipe(autoPrefixer(optionsCleanPrefixes))                               // Clean all prefixed styles
+        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))  // Lint all styles
+        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))                       // Add prefixed styles
+        .pipe(prettier(optionsPrettier))                                        // Format styles
+        .pipe(gulp.dest(folders.quick))                                         // Save as `.css` file to `quick` folder
+        .pipe(cleanCSS(optionsCleanCss))                                        // Minify all `.css` files
+        .pipe(dest("./", optionsExtDotMinDotCss))                               // Set minified file names
+        .pipe(gulp.dest(folders.quick));                                        // Save as `.min.css` file to `quick` folder
 });

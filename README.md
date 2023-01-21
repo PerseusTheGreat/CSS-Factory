@@ -31,5 +31,5 @@ A simple tool to make CSS files cleaned, linted, prefixed, prettified, RTL-ized 
   this command will update each used package in `package.json/devDependencies/*` to the latest version, then will install, audit, rebuild them forcibly.
 
 ### Footnote
-This tool regulates CSS styles to be compatible with [Bootstrap 4.x browser compatibilty level](https://getbootstrap.com/docs/4.6/getting-started/browsers-devices/#supported-browsers).
-If you want the output be in different compatibility level, you should edit `gulpfile.js` (lines 32 through 42) based on [Autoprefixer](https://github.com/postcss/autoprefixer) documentations.
+This tool regulates CSS styles to be compatible with [Bootstrap 5.x browser compatibilty level](https://getbootstrap.com/docs/5.3/getting-started/browsers-devices/#supported-browsers).
+If you want the output be in different compatibility level, you should edit `gulpfile.js` (lines 32 through 40) based on [Autoprefixer](https://github.com/postcss/autoprefixer) documentations.

@@ -1,10 +1,19 @@
 {
   "name": "css-factory",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "keywords": [],
-  "author": "Perseus The Great",
+  "version": "2.3.0-alpha1",
+  "description": "A simple tool to make CSS files cleaned, linted, prefixed, prettified, RTL-ized and minified, all together, just with one command.",
+  "main": "gulpfile.js",
+  "keywords": [
+    "css",
+    "less",
+    "clean",
+    "lint",
+    "prefix",
+    "prety",
+    "rtl",
+    "minify"
+  ],
+  "author": "Arash Laylazi (https://github.com/PerseusTheGreat)",
   "license": "ISC",
   "scripts": {
     "update": "ncu -u && npm install -f && npm audit fix -f && npm rebuild -f",
@@ -20,7 +29,7 @@
     "less": "gulp quick-build-less"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.2",
+    "autoprefixer": "^10.4.13",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",
     "gulp-clean-css": "^4.3.0",
@@ -29,10 +38,10 @@
     "gulp-less": "^5.0.0",
     "gulp-prettier": "^4.0.0",
     "gulp-rename": "^2.0.0",
-    "gulp-rtlcss": "^1.4.2",
+    "gulp-rtlcss": "^2.0.0",
     "gulp-strip-comments": "^2.5.2",
-    "gulp-stylelint": "^13.0.0",
-    "stylelint": "^14.5.3",
-    "stylelint-config-twbs-bootstrap": "^2.2.4"
+    "gulp-stylelint": "npm:@ronilaukkarinen/gulp-stylelint@14.0.9",
+    "stylelint": "^14.16.1",
+    "stylelint-config-twbs-bootstrap": "^7.0.0"
   }
 }
