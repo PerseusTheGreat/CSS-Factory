@@ -13,11 +13,11 @@ node_modules
 /work/quick/*
 
 # Folders to include
-!/work/0_input/
-!/work/1_clean/
-!/work/2_lint/
-!/work/3_prefix/
-!/work/4_pretty/
-!/work/5_dist/
-!/work/less/
-!/work/quick/
+!/work/0_input
+!/work/1_clean
+!/work/2_lint
+!/work/3_prefix
+!/work/4_pretty
+!/work/5_dist
+!/work/less
+!/work/quick
