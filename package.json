@@ -1,7 +1,7 @@
 {
   "name": "css-factory",
   "version": "3.0.0",
-  "description": "A simple tool to make CSS files cleaned, linted, prefixed, prettified, RTL-ized and minified, all together, just with one command.",
+  "description": "A simple tool to clean, lint, prefix, prettify, RTL-ize, and minify CSS files, all with just one command.",
   "type": "module",
   "main": "gulpfile.js",
   "keywords": [
