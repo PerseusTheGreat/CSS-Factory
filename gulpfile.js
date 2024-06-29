@@ -1,11 +1,21 @@
-/** Global Needs **/
-const gulp = require("gulp");
-const cleanDir = require('gulp-clean-dir');
-let styleLint;
-let autoPrefixer;
+// #region Global Needs
 
-/** Options **/
-const folders = {
+import { task, src, dest, series } from "gulp";
+import gulpCleanDir                from 'gulp-clean-dir';
+import gulpStyleLint               from 'gulp-stylelint';
+import gulpStripComments           from 'gulp-strip-comments';
+import gulpAutoPrefixer            from 'gulp-autoprefixer';
+import gulpPrettier                from 'gulp-prettier';
+import gulpRtlCss                  from 'gulp-rtlcss';
+import gulpRename                  from 'gulp-rename';
+import gulpCleanCss                from 'gulp-clean-css';
+import gulpDest                    from 'gulp-dest';
+
+// #endregion Global Needs
+
+// #region Options
+
+const FOLDERS = {
     input:  './work/0_input',
     clean:  './work/1_clean',
     lint:   './work/2_lint',
@@ -15,19 +25,24 @@ const folders = {
     quick:  './work/quick',
     less:   './work/less'
 };
-const slashStartDotCss = '/*.css';
 
-const optionsExtDotTxt = { ext: ['.txt'] };
-const optionsExtDotTxtAndDotCss = { ext: ['.txt', '.css'] };
-const otionsStripComments = {
+const SLASH_START_DOT_CSS = '/*.css';
+
+const OPTIONS_EXT_DOT_TXT = { ext: ['.txt'] };
+
+const OPTIONS_EXT_DOT_TXT_AND_DOT_CSS = { ext: ['.txt', '.css'] };
+
+const OPTIONS_STRIP_COMMENTS = {
     ignore: /url\([\w\s:\/=\-\+;,]*\)/g,
     trim: true
 };
-const optionsCleanPrefixes = {
+
+const OPTIONS_CLEAN_PREFIXES = {
     overrideBrowserslist: ["> 100%"],
     cascade: false
 };
-const optionsLikeBootstrapPrefixes = {
+
+const OPTIONS_LIKE_BOOTSTRAP_PREFIXES = {
     overrideBrowserslist: [
         ">= 0.5%",
         "last 2 major versions",
@@ -41,17 +56,24 @@ const optionsLikeBootstrapPrefixes = {
     ],
     cascade: false
 };
-const optionsPrettier = {
+
+const OPTIONS_PRETTIER = {
     singleQuote: true,
-    parser: 'css',
+    parser:    'css',
     endOfLine: 'crlf',
     proseWrap: 'never'
 };
-const optionsCleanCss = {
+
+const OPTIONS_CLEAN_CSS = {
     format: { breakWith: '\n' },
     level: 1
 };
-const optionsExtDotMinDotCss = { ext: ".min.css" };
+
+const OPTIONS_EXT_DOT_MIN_DOT_CSS = { ext: ".min.css" };
+
+// #endregion Options
+
+// #region Utilities
 
 const getOptionsStyleLint = function (doFix, outputPath, fileName) {
     return {
@@ -70,136 +92,99 @@ const getOptionsStyleLint = function (doFix, outputPath, fileName) {
     }
 };
 
-/** Tasks **/
-gulp.task('clean-up-files', function () {
-    return gulp
-        .src('./package.json')
-        .pipe(cleanDir(folders.less, { ext: ['.less'] }))
-        .pipe(cleanDir(folders.input, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.clean, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.lint, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.prefix, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.pretty, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.dist, optionsExtDotTxtAndDotCss))
-        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss));
-});
+// #endregion Utilities
 
-gulp.task('pre-lint-css', function () {
-    styleLint = styleLint || require('gulp-stylelint');
 
-    return gulp
-        .src(folders.input + slashStartDotCss)
-        .pipe(cleanDir(folders.input, optionsExtDotTxt))
-        .pipe(styleLint(getOptionsStyleLint(false, folders.input, 'prelint.txt')));
-});
+// #region Tasks
 
-gulp.task('clean-css', function () {
-    const strip = require('gulp-strip-comments');
-    autoPrefixer = autoPrefixer || require('gulp-autoprefixer');
+task('clean-up-files', () => 
+     src('./package.json')
+    .pipe(gulpCleanDir(FOLDERS.less, { ext: ['.less'] }))
+    .pipe(gulpCleanDir(FOLDERS.input, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.clean, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.lint, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.prefix, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.pretty, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.dist, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanDir(FOLDERS.quick, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+);
 
-    return gulp
-        .src(folders.input + slashStartDotCss)
-        .pipe(cleanDir(folders.clean, optionsExtDotTxtAndDotCss))
-        .pipe(strip.text(otionsStripComments))
-        .pipe(autoPrefixer(optionsCleanPrefixes))
-        .pipe(gulp.dest(folders.clean));
-});
+task('pre-lint-css', () => 
+     src(FOLDERS.input + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.input, OPTIONS_EXT_DOT_TXT))
+    .pipe(gulpStyleLint(getOptionsStyleLint(false, FOLDERS.input, 'prelint.txt')))
+);
 
-gulp.task('lint-css', function () {
-    styleLint = styleLint || require('gulp-stylelint');
+task('clean-css', () => 
+     src(FOLDERS.input + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.clean, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpStripComments.text(OPTIONS_STRIP_COMMENTS))
+    .pipe(gulpAutoPrefixer(OPTIONS_CLEAN_PREFIXES))
+    .pipe(dest(FOLDERS.clean))
+);
 
-    return gulp
-        .src(folders.clean + slashStartDotCss)
-        .pipe(cleanDir(folders.lint, optionsExtDotTxtAndDotCss))
-        .pipe(styleLint(getOptionsStyleLint(true, folders.lint, 'postlint.txt')))
-        .pipe(gulp.dest(folders.lint));;
-});
+task('lint-css', () => 
+     src(FOLDERS.clean + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.lint, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpStyleLint(getOptionsStyleLint(true, FOLDERS.lint, 'postlint.txt')))
+    .pipe(dest(FOLDERS.lint))
+);
 
-gulp.task('prefix-css', function () {
-    autoPrefixer = autoPrefixer || require('gulp-autoprefixer');
+task('prefix-css', () => 
+     src(FOLDERS.lint + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.prefix, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpAutoPrefixer(OPTIONS_LIKE_BOOTSTRAP_PREFIXES))
+    .pipe(dest(FOLDERS.prefix))
+);
 
-    return gulp
-        .src(folders.lint + slashStartDotCss)
-        .pipe(cleanDir(folders.prefix, optionsExtDotTxtAndDotCss))
-        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))
-        .pipe(gulp.dest(folders.prefix));
-});
+task('prettify-css', () => 
+     src(FOLDERS.prefix + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.pretty, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpPrettier(OPTIONS_PRETTIER))
+    .pipe(dest(FOLDERS.pretty))
+    .pipe(gulpRtlCss())
+    .pipe(gulpRename({ suffix: '-rtl' }))
+    .pipe(dest(FOLDERS.pretty))
+);
 
-gulp.task('prettify-css', function () {
-    const prettier = require('gulp-prettier');
-    const rtlcss = require('gulp-rtlcss');
-    const rename = require('gulp-rename');
+task('minify-css', () => 
+     src(FOLDERS.pretty + SLASH_START_DOT_CSS)
+    .pipe(gulpCleanDir(FOLDERS.dist, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))
+    .pipe(gulpCleanCss(OPTIONS_CLEAN_CSS))
+    .pipe(gulpDest("./", OPTIONS_EXT_DOT_MIN_DOT_CSS))
+    .pipe(dest(FOLDERS.dist))
+);
 
-    return gulp
-        .src(folders.prefix + slashStartDotCss)
-        .pipe(cleanDir(folders.pretty, optionsExtDotTxtAndDotCss))
-        .pipe(prettier(optionsPrettier))
-        .pipe(gulp.dest(folders.pretty))
-        .pipe(rtlcss())
-        .pipe(rename({ suffix: '-rtl' }))
-        .pipe(gulp.dest(folders.pretty))
-});
+task('build-css', series('pre-lint-css', 'clean-css', 'lint-css', 'prefix-css', 'prettify-css', 'minify-css'));
 
-gulp.task('minify-css', function () {
-    const cleanCSS = require('gulp-clean-css');
-    const dest = require("gulp-dest");
+task('quick-build-css', () => 
+     src(FOLDERS.input + SLASH_START_DOT_CSS)                                  // Get all `.css` files in `input` folder
+    .pipe(gulpCleanDir(FOLDERS.input, OPTIONS_EXT_DOT_TXT))                    // Delete all `.txt` files in `input` folder
+    .pipe(gulpCleanDir(FOLDERS.quick, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))        // Delete all `.css` & `.txt` files in `quick` folder
+    .pipe(gulpStripComments.text(OPTIONS_STRIP_COMMENTS))                      // Remove all comments inside `.css` files
+    .pipe(gulpAutoPrefixer(OPTIONS_CLEAN_PREFIXES))                            // Clean all prefixed styles
+    .pipe(gulpStyleLint(getOptionsStyleLint(true, FOLDERS.quick, 'lint.txt'))) // Lint all styles
+    .pipe(gulpAutoPrefixer(OPTIONS_LIKE_BOOTSTRAP_PREFIXES))                   // Add prefixed styles
+    .pipe(gulpPrettier(OPTIONS_PRETTIER))                                      // Format styles
+    .pipe(dest(FOLDERS.quick))                                                 // Save as `.css` file to `quick` folder
+    .pipe(gulpCleanCss(OPTIONS_CLEAN_CSS))                                     // Minify all `.css` files
+    .pipe(gulpDest("./", OPTIONS_EXT_DOT_MIN_DOT_CSS))                         // Set minified file names
+    .pipe(dest(FOLDERS.quick))                                                 // Save as `.min.css` file to `quick` folder
+);
 
-    return gulp
-        .src(folders.pretty + slashStartDotCss)
-        .pipe(cleanDir(folders.dist, optionsExtDotTxtAndDotCss))
-        .pipe(cleanCSS(optionsCleanCss))
-        .pipe(dest("./", optionsExtDotMinDotCss))
-        .pipe(gulp.dest(folders.dist));
-});
+task('quick-build-less', () => 
+     src(FOLDERS.less + '/*.less')                                             // Get all `.less` files in `less` folder
+    .pipe(gulpCleanDir(FOLDERS.quick, OPTIONS_EXT_DOT_TXT_AND_DOT_CSS))        // Delete all `.css` & `.txt` files in `quick` folder
+    .pipe(less())                                                              // Transpile LESS styles to CSS styles
+    .pipe(gulpStripComments.text(OPTIONS_STRIP_COMMENTS))                      // Remove all comments inside CSS styles
+    .pipe(gulpAutoPrefixer(OPTIONS_CLEAN_PREFIXES))                            // Clean all prefixed styles
+    .pipe(gulpStyleLint(getOptionsStyleLint(true, FOLDERS.quick, 'lint.txt'))) // Lint all styles
+    .pipe(gulpAutoPrefixer(OPTIONS_LIKE_BOOTSTRAP_PREFIXES))                   // Add prefixed styles
+    .pipe(gulpPrettier(OPTIONS_PRETTIER))                                      // Format styles
+    .pipe(dest(FOLDERS.quick))                                                 // Save as `.css` file to `quick` folder
+    .pipe(gulpCleanCss(OPTIONS_CLEAN_CSS))                                     // Minify all `.css` files
+    .pipe(gulpDest("./", OPTIONS_EXT_DOT_MIN_DOT_CSS))                         // Set minified file names
+    .pipe(dest(FOLDERS.quick))                                                 // Save as `.min.css` file to `quick` folder
+);
 
-gulp.task('build-css', gulp.series('pre-lint-css', 'clean-css', 'lint-css', 'prefix-css', 'prettify-css', 'minify-css'));
-
-gulp.task('quick-build-css', function () {
-    styleLint = styleLint || require('gulp-stylelint');
-    autoPrefixer = autoPrefixer || require('gulp-autoprefixer');
-
-    const strip = require('gulp-strip-comments');
-    const prettier = require('gulp-prettier');
-    const cleanCSS = require('gulp-clean-css');
-    const dest = require("gulp-dest");
-
-    return gulp
-        .src(folders.input + slashStartDotCss)                                  // Get all `.css` files in `input` folder
-        .pipe(cleanDir(folders.input, optionsExtDotTxt))                        // Delete all `.txt` files in `input` folder
-        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))               // Delete all `.css` & `.txt` files in `quick` folder
-        .pipe(strip.text(otionsStripComments))                                  // Remove all comments inside `.css` files
-        .pipe(autoPrefixer(optionsCleanPrefixes))                               // Clean all prefixed styles
-        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))  // Lint all styles
-        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))                       // Add prefixed styles
-        .pipe(prettier(optionsPrettier))                                        // Format styles
-        .pipe(gulp.dest(folders.quick))                                         // Save as `.css` file to `quick` folder
-        .pipe(cleanCSS(optionsCleanCss))                                        // Minify all `.css` files
-        .pipe(dest("./", optionsExtDotMinDotCss))                               // Set minified file names
-        .pipe(gulp.dest(folders.quick));                                        // Save as `.min.css` file to `quick` folder
-});
-
-gulp.task('quick-build-less', function () {
-    const less = require('gulp-less');
-    const strip = require('gulp-strip-comments');
-
-    autoPrefixer = autoPrefixer || require('gulp-autoprefixer');
-    styleLint = styleLint || require('gulp-stylelint');
-
-    const prettier = require('gulp-prettier');
-    const cleanCSS = require('gulp-clean-css');
-    const dest = require("gulp-dest");
-
-    return gulp
-        .src(folders.less + '/*.less')                                          // Get all `.less` files in `less` folder
-        .pipe(cleanDir(folders.quick, optionsExtDotTxtAndDotCss))               // Delete all `.css` & `.txt` files in `quick` folder
-        .pipe(less())                                                           // Transpile LESS styles to CSS styles
-        .pipe(strip.text(otionsStripComments))                                  // Remove all comments inside CSS styles
-        .pipe(autoPrefixer(optionsCleanPrefixes))                               // Clean all prefixed styles
-        .pipe(styleLint(getOptionsStyleLint(true, folders.quick, 'lint.txt')))  // Lint all styles
-        .pipe(autoPrefixer(optionsLikeBootstrapPrefixes))                       // Add prefixed styles
-        .pipe(prettier(optionsPrettier))                                        // Format styles
-        .pipe(gulp.dest(folders.quick))                                         // Save as `.css` file to `quick` folder
-        .pipe(cleanCSS(optionsCleanCss))                                        // Minify all `.css` files
-        .pipe(dest("./", optionsExtDotMinDotCss))                               // Set minified file names
-        .pipe(gulp.dest(folders.quick));                                        // Save as `.min.css` file to `quick` folder
-});
+// #endregion Tasks

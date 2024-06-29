@@ -1,35 +1,35 @@
 # CSS-Factory
-A simple tool to make CSS files cleaned, linted, prefixed, prettified, RTL-ized and minified, all together, just with one command.
+A simple tool to clean, lint, prefix, prettify, RTL-ize, and minify CSS files, all with just one command.
 
 ### Usage instrunctions:
-1. Clone this repo.
-2. Install packages.
-3. Put your CSS files in `./work/0_input/` folder.
-4. Run `build` command.
-5. Get the regulated version from `./work/5_dist`.
+1. Clone this repository.
+2. Install the required packages.
+3. Place your CSS files in the `./work/0_input/` folder.
+4. Run the `build` command.
+5. Retrieve the processed files from the `./work/5_dist` folder."
 
 ### Commands reference:
 - `npm run build`
 
-  this command will process all CSS files in `./work/0_input/` and will create cleand, linted, prettified version in `./work/4_pretty` and minified version in `./work/5_dist`. 
-  it also will create RTL-ized version separately beside them.
+  This command will process all CSS files in `./work/0_input/` and create a cleaned, linted, prettified version in `./work/4_pretty` and a minified version in `./work/5_dist.`.
+  It will also create an RTL-ized version separately alongside them.
 
 - `npm run quick`
 
-  this command will process all CSS files in `./work/0_input/` and will create cleand, linted, prettified and minified version in `./work/quick`. (without RTL)
+  This command will process all CSS files in `./work/0_input/` and create a cleaned, linted, prettified, and minified version in `./work/quick` (without RTL).
 
 - `npm run less`
 
-  this command will process all LESS files in `./work/less/` and will create cleand, linted, prettified and minified CSS version in `./work/quick`.
+  This command will process all LESS files in `./work/less/` and create a cleaned, linted, prettified, and minified CSS version in `./work/quick`.
 
 - `npm run empty`
 
-  this command will clear all files in all sub-folders of `./work/`.
+  This command will clear all files in all subfolders of `./work/`.
 
 - `npm run update`
 
-  this command will update each used package in `package.json/devDependencies/*` to the latest version, then will install, audit, rebuild them forcibly.
+  This command will update each package in `package.json/devDependencies/*` to the latest version, then install, audit, and forcibly rebuild them.
 
 ### Footnote
-This tool regulates CSS styles to be compatible with [Bootstrap 5.x browser compatibilty level](https://getbootstrap.com/docs/5.3/getting-started/browsers-devices/#supported-browsers).
-If you want the output be in different compatibility level, you should edit `gulpfile.js` (lines 32 through 40) based on [Autoprefixer](https://github.com/postcss/autoprefixer) documentations.
+This tool ensures CSS styles are compatible with the [Bootstrap 5.x browser compatibility level](https://getbootstrap.com/docs/5.3/getting-started/browsers-devices/#supported-browsers).
+If you want the output to be at a different compatibility level, you should edit `gulpfile.js` (lines 47 through 55) based on the [Autoprefixer](https://github.com/postcss/autoprefixer) documentation.
